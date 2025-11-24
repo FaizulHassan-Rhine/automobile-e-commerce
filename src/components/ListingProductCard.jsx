@@ -1,12 +1,23 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useCart } from "@/context/CartContext";
 
 export default function ListingProductCard({ product }) {
     const pathname = usePathname();
+    const { addToCart } = useCart();
+
     // Construct URL: current path + / + product slug
     const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const href = `${pathname}/${productSlug}`;
+
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(product);
+    };
 
     return (
         <Link href={href} className="block h-full">
@@ -39,7 +50,10 @@ export default function ListingProductCard({ product }) {
                     </div>
                 </div>
 
-                <button className="w-full bg-[#D9822B] text-white font-bold py-3 text-sm uppercase tracking-wider hover:bg-[#c07225] transition-colors rounded-sm">
+                <button
+                    onClick={handleAddToCart}
+                    className="w-full bg-[#D9822B] text-white font-bold py-3 text-sm uppercase tracking-wider hover:bg-[#c07225] transition-colors rounded-sm"
+                >
                     ADD TO CART
                 </button>
             </div>

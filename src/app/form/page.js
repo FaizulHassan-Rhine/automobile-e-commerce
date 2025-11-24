@@ -10,14 +10,14 @@ export default function Home() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const phoneNumber = "01845845789"; // ← PUT YOUR WHATSAPP NUMBER HERE
+        const phoneNumber = "8801845845789"; // Country code (880) + Number
 
-        const text = `New Form Submission:%0A
-Name: ${name}%0A
-Email: ${email}%0A
+        const text = `New Form Submission:
+Name: ${name}
+Email: ${email}
 Message: ${message}`;
 
-        const whatsappURL = `https://wa.me/${phoneNumber}?text=${text}`;
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
 
         window.open(whatsappURL, "_blank");
     };
