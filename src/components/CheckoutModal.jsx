@@ -67,18 +67,18 @@ export default function CheckoutModal() {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
+            {/* Backdrop - Light and Blurred */}
             <div
-                className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
+                className="absolute inset-0 bg-white/40 backdrop-blur-md transition-all"
                 onClick={toggleCheckout}
             ></div>
 
             {/* Modal */}
-            <div className="relative bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col md:flex-row">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto flex flex-col md:flex-row border border-gray-100">
 
                 {/* Left Side: Form */}
                 <div className="flex-1 p-6 md:p-8">
-                    <h2 className="text-2xl font-bold mb-6">Checkout</h2>
+                    <h2 className="text-2xl font-bold mb-6 text-gray-900">Checkout</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -88,7 +88,7 @@ export default function CheckoutModal() {
                                 required
                                 value={formData.name}
                                 onChange={handleChange}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                             />
                         </div>
                         <div>
@@ -98,13 +98,13 @@ export default function CheckoutModal() {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                             />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                             <div className="flex">
-                                <span className="inline-flex items-center px-3 rounded-l border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                <span className="inline-flex items-center px-4 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                     🇧🇩
                                 </span>
                                 <input
@@ -113,16 +113,16 @@ export default function CheckoutModal() {
                                     required
                                     value={formData.phone}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded-r px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-r-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                                     placeholder="01..."
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Delivery type</label>
-                            <div className="flex space-x-4">
-                                <label className="flex items-center space-x-2 cursor-pointer">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Delivery type</label>
+                            <div className="flex flex-wrap gap-3">
+                                <label className="flex items-center space-x-2 cursor-pointer px-4 py-2 border border-gray-300 rounded-lg hover:border-orange-500 transition">
                                     <input
                                         type="radio"
                                         name="deliveryType"
@@ -131,9 +131,9 @@ export default function CheckoutModal() {
                                         onChange={handleChange}
                                         className="text-orange-500 focus:ring-orange-500"
                                     />
-                                    <span>Courier</span>
+                                    <span className="text-sm">Courier</span>
                                 </label>
-                                <label className="flex items-center space-x-2 cursor-pointer">
+                                <label className="flex items-center space-x-2 cursor-pointer px-4 py-2 border border-gray-300 rounded-lg hover:border-orange-500 transition">
                                     <input
                                         type="radio"
                                         name="deliveryType"
@@ -142,19 +142,9 @@ export default function CheckoutModal() {
                                         onChange={handleChange}
                                         className="text-orange-500 focus:ring-orange-500"
                                     />
-                                    <span>Home delivery</span>
+                                    <span className="text-sm">Home delivery</span>
                                 </label>
-                                <label className="flex items-center space-x-2 cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="deliveryType"
-                                        value="Click & Collect"
-                                        checked={formData.deliveryType === "Click & Collect"}
-                                        onChange={handleChange}
-                                        className="text-orange-500 focus:ring-orange-500"
-                                    />
-                                    <span>Click & Collect</span>
-                                </label>
+
                             </div>
                         </div>
 
@@ -166,20 +156,20 @@ export default function CheckoutModal() {
                                 required
                                 value={formData.address}
                                 onChange={handleChange}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                             />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">City / Area</label>
-                                <input // Using simple input for now, could be select
+                                <input
                                     type="text"
                                     name="city"
                                     required
                                     value={formData.city}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                                 />
                             </div>
                             <div>
@@ -189,7 +179,7 @@ export default function CheckoutModal() {
                                     name="zip"
                                     value={formData.zip}
                                     onChange={handleChange}
-                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
                                 />
                             </div>
                         </div>
@@ -201,7 +191,7 @@ export default function CheckoutModal() {
                                 name="country"
                                 disabled
                                 value={formData.country}
-                                className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 text-gray-500"
+                                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 bg-gray-50 text-gray-500"
                             />
                         </div>
 
@@ -209,13 +199,13 @@ export default function CheckoutModal() {
                             <button
                                 type="button"
                                 onClick={toggleCheckout}
-                                className="text-gray-500 hover:text-gray-700"
+                                className="text-gray-500 hover:text-gray-700 font-medium transition"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                className="bg-orange-500 text-white font-bold py-2 px-6 rounded hover:bg-orange-600 transition"
+                                className="bg-orange-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-orange-600 transition shadow-lg hover:shadow-xl"
                             >
                                 Send to WhatsApp
                             </button>
@@ -224,12 +214,12 @@ export default function CheckoutModal() {
                 </div>
 
                 {/* Right Side: Order Summary */}
-                <div className="w-full md:w-80 bg-gray-50 p-6 border-l border-gray-100">
+                <div className="w-full md:w-80 bg-gradient-to-br from-gray-50 to-gray-100 p-6 border-l border-gray-200">
                     <h3 className="text-lg font-bold text-gray-800 mb-4">ORDER SUMMARY</h3>
                     <div className="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
                         {cartItems.map((item) => (
-                            <div key={item.id} className="flex gap-3">
-                                <div className="w-12 h-12 bg-white rounded border flex items-center justify-center flex-shrink-0">
+                            <div key={item.id} className="flex gap-3 bg-white p-3 rounded-lg shadow-sm">
+                                <div className="w-12 h-12 bg-orange-50 rounded border border-orange-200 flex items-center justify-center flex-shrink-0">
                                     <span className="text-xl">🛢️</span>
                                 </div>
                                 <div className="flex-1 text-sm">
@@ -241,7 +231,7 @@ export default function CheckoutModal() {
                         ))}
                     </div>
 
-                    <div className="border-t border-gray-200 pt-4 space-y-2">
+                    <div className="border-t border-gray-300 pt-4 space-y-2">
                         <div className="flex justify-between text-gray-600">
                             <span>Subtotal</span>
                             <span>৳ {cartTotal.toFixed(2)}</span>
@@ -250,7 +240,7 @@ export default function CheckoutModal() {
                             <span>Discount</span>
                             <span>৳ 0.00</span>
                         </div>
-                        <div className="flex justify-between font-bold text-lg text-gray-900 pt-2 border-t border-gray-200 mt-2">
+                        <div className="flex justify-between font-bold text-lg text-gray-900 pt-2 border-t border-gray-300 mt-2">
                             <span>Total</span>
                             <span>৳ {cartTotal.toFixed(2)}</span>
                         </div>
