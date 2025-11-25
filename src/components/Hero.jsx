@@ -9,31 +9,31 @@ export default function Hero() {
     const slides = [
         {
             id: 1,
-            image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=800&auto=format&fit=crop',
+            image: '/images/hero/1.jpg',
             title: 'Engine Oil',
             description: 'Premium protection for your engine'
         },
         {
             id: 2,
-            image: 'https://images.unsplash.com/photo-1578844251758-2f71da645217?q=80&w=800&auto=format&fit=crop',
+            image: '/images/hero/2.jpg',
             title: 'OEM Spare Parts',
             description: 'Get authentic car components'
         },
         {
             id: 3,
-            image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop',
+            image: '/images/hero/3.jpg',
             title: 'Night Vision',
             description: 'Headlights and visibility solutions'
         },
         {
             id: 4,
-            image: 'https://images.unsplash.com/photo-1503376763036-066120622c74?q=80&w=800&auto=format&fit=crop',
+            image: '/images/hero/4.jpg',
             title: 'Performance Tires',
             description: 'Grip and control for every road'
         },
         {
             id: 5,
-            image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=800&auto=format&fit=crop',
+            image: '/images/hero/5.jpg',
             title: 'Car Accessories',
             description: 'Upgrade your driving experience'
         }
@@ -46,6 +46,14 @@ export default function Hero() {
         }, 5000);
         return () => clearInterval(timer);
     }, [slides.length]);
+
+    // Helper function to get the correct slide index with wrapping
+    const getSlideIndex = (offset) => {
+        const index = currentSlide + offset;
+        if (index < 0) return slides.length + index;
+        if (index >= slides.length) return index - slides.length;
+        return index;
+    };
 
     return (
         <section className="relative bg-white pb-12 overflow-hidden">
@@ -99,62 +107,77 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* Full Width Slider Section */}
-            <div className="relative w-full mt-8">
-                <div className="flex items-center justify-center overflow-hidden">
-                    {/* We display 3 images but centered on the current one */}
-                    <div
-                        className="flex transition-transform duration-700 ease-in-out"
-                        style={{
-                            transform: `translateX(calc(-${currentSlide * 33.333}% + 33.333%))`,
-                            width: `${slides.length * 33.333}%` // Ensure enough width for all slides
-                        }}
-                    >
-                        {slides.map((slide, index) => {
-                            const isActive = index === currentSlide;
-                            return (
+            {/* 3-Image Carousel */}
+            <div className="relative w-full mt-8 py-8">
+                <div className="container mx-auto px-4">
+                    <div className="flex items-center justify-center gap-6">
+                        {/* Left Image */}
+                        <div className="w-1/4 flex-shrink-0 transition-all duration-700 ease-in-out transform scale-90 opacity-50 grayscale">
+                            <div className="h-48 md:h-72 w-full overflow-hidden rounded-lg shadow-lg">
                                 <div
-                                    key={slide.id}
-                                    className={`relative px-2 transition-all duration-500 ${isActive ? 'scale-110 z-10 opacity-100' : 'scale-90 opacity-50 grayscale'}`}
-                                    style={{ width: '33.333%', flexShrink: 0 }}
-                                >
-                                    <div className="h-64 md:h-96 w-full overflow-hidden rounded-lg shadow-lg">
-                                        <div
-                                            className="w-full h-full bg-cover bg-center"
-                                            style={{ backgroundImage: `url(${slide.image})` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                    className="w-full h-full bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${slides[getSlideIndex(-1)].image})` }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        {/* Center Image (Active) */}
+                        <div className="w-1/2 flex-shrink-0 transition-all duration-700 ease-in-out transform scale-110 z-10">
+                            <div className="h-64 md:h-96 w-full overflow-hidden rounded-lg shadow-2xl">
+                                <div
+                                    className="w-full h-full bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
+                                ></div>
+                            </div>
+                        </div>
+
+                        {/* Right Image */}
+                        <div className="w-1/4 flex-shrink-0 transition-all duration-700 ease-in-out transform scale-90 opacity-50 grayscale">
+                            <div className="h-48 md:h-72 w-full overflow-hidden rounded-lg shadow-lg">
+                                <div
+                                    className="w-full h-full bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${slides[getSlideIndex(1)].image})` }}
+                                ></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Text and Counter Section */}
-            <div className="container mx-auto px-4 mt-12 text-center">
-                <div className="max-w-2xl mx-auto">
-                    <h2 className="text-4xl font-black text-gray-900 mb-2 uppercase tracking-tighter transition-all duration-300">
+            {/* Title and Description - Below Carousel */}
+            <div className="container mx-auto px-4 mt-8 text-center">
+                <div className="max-w-3xl mx-auto">
+                    <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-3 uppercase tracking-tight transition-all duration-300">
                         {slides[currentSlide].title}
                     </h2>
-                    <p className="text-gray-500 text-sm uppercase tracking-widest mb-8">
+                    <p className="text-gray-600 text-base uppercase tracking-wide mb-8">
                         {slides[currentSlide].description}
                     </p>
+                </div>
+            </div>
 
-                    {/* Counter and Progress */}
-                    <div className="flex items-center justify-center space-x-4">
-                        <span className="text-sm font-bold text-gray-900">
-                            {String(currentSlide + 1).padStart(2, '0')}
-                        </span>
-                        <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
+            {/* Counter and Progress Bar - Below Title */}
+            <div className="container mx-auto px-4 mt-4">
+                <div className="max-w-md mx-auto">
+                    <div className="flex items-center gap-6">
+                        {/* Counter on Left */}
+                        <div className="flex items-baseline gap-0.5">
+                            <span className="text-base font-bold text-gray-900">
+                                {String(currentSlide + 1).padStart(2, '0')}
+                            </span>
+                            <span className="text-base font-bold text-gray-400">/</span>
+                            <span className="text-base font-bold text-gray-400">
+                                {String(slides.length).padStart(2, '0')}
+                            </span>
+                        </div>
+
+                        {/* Progress Bar on Right */}
+                        <div className="flex-1 h-0.5 bg-gray-300 rounded-full overflow-hidden relative">
                             <div
-                                className="h-full bg-orange-500 transition-all duration-500 ease-out"
+                                className="h-full bg-orange-500 transition-all duration-500 ease-out absolute left-0 top-0"
                                 style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
                             ></div>
                         </div>
-                        <span className="text-sm font-bold text-gray-400">
-                            {String(slides.length).padStart(2, '0')}
-                        </span>
                     </div>
                 </div>
             </div>
