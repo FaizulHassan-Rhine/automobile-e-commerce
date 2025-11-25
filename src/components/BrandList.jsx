@@ -58,7 +58,7 @@ export default function BrandList() {
     }, [isPaused]);
 
     return (
-        <section className="py-12 bg-gray-100">
+        <section className="py-12 bg-white">
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-8">
@@ -80,14 +80,14 @@ export default function BrandList() {
                             <div
                                 key={index}
                                 className="flex-shrink-0 bg-white rounded-lg p-6 hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                                style={{ minWidth: '160px', maxWidth: '160px' }}
+                                style={{ minWidth: '280px', maxWidth: '160px' }}
                             >
-                                <div className="relative h-20 w-full flex items-center justify-center">
+                                <div className="relative h-full w-full flex items-center justify-center">
                                     <Image
                                         src={brand.image}
                                         alt={brand.name}
-                                        width={140}
-                                        height={80}
+                                        width={280}
+                                        height={160}
                                         className="object-contain transition-all duration-300"
                                     />
                                 </div>

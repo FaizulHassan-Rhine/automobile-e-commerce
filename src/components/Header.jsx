@@ -44,9 +44,7 @@ export default function Header() {
               )}
             </div>
           </button>
-          <button className="bg-orange-500 text-white font-bold px-6 py-2 rounded hover:bg-orange-600 transition">
-            SIGN IN
-          </button>
+
         </div>
       </div>
     </header>
