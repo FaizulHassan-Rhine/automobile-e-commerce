@@ -7,7 +7,9 @@ import { useCart } from "@/context/CartContext";
 
 export default function ListingProductCard({ product }) {
     const pathname = usePathname();
-    const { addToCart } = useCart();
+    const { cartItems, addToCart } = useCart();
+
+    const isInCart = cartItems.some((item) => item.id === product.id);
 
     // Construct URL: current path + / + product slug
     const productSlug = product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -16,6 +18,7 @@ export default function ListingProductCard({ product }) {
     const handleAddToCart = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        if (isInCart) return;
         addToCart(product);
     };
 
@@ -52,9 +55,13 @@ export default function ListingProductCard({ product }) {
 
                 <button
                     onClick={handleAddToCart}
-                    className="w-full bg-[#D9822B] text-white font-bold py-3 text-sm uppercase tracking-wider hover:bg-[#c07225] transition-colors rounded-sm"
+                    disabled={isInCart}
+                    className={`w-full font-bold py-3 text-sm uppercase tracking-wider transition-colors rounded-sm
+                        ${isInCart
+                            ? "bg-green-500 text-white cursor-not-allowed"
+                            : "bg-[#D9822B] text-white hover:bg-[#c07225]"}`}
                 >
-                    ADD TO CART
+                    {isInCart ? "Added" : "Add to cart"}
                 </button>
             </div>
         </Link>
