@@ -52,6 +52,13 @@ export default function Home() {
     { id: 4, name: "Performance Brake Kit", price: 8500, oldPrice: 9200, brand: "OilCo", discount: 8, image: "/images/breaks/4.jpg" },
   ];
 
+  const damping = [
+    { id: 1, name: "Front Shock Absorber", price: 5200, oldPrice: 5600, brand: "OilCo", discount: 7, image: "/images/damping/1.jpg" },
+    { id: 2, name: "Rear Shock Absorber", price: 5000, oldPrice: 5400, brand: "OilCo", discount: 7, image: "/images/damping/2.jpg" },
+    { id: 3, name: "Suspension Spring Set", price: 7800, oldPrice: 8200, brand: "OilCo", discount: 5, image: "/images/damping/3.jpg" },
+    { id: 4, name: "Complete Damping Kit", price: 11500, oldPrice: 12200, brand: "OilCo", discount: 6, image: "/images/damping/4.jpg" },
+  ];
+
   return (
     <div className="bg-white">
       <Hero />
@@ -110,9 +117,15 @@ export default function Home() {
         count={362}
       />
 
-     
+      <ProductSection
+        title="Damping"
+        products={damping}
+        iconSrc="/images/damping.png"
+        viewMoreHref="/category/damping"
+        count={226}
+      />
 
-      <ProductSection title="Car Care & Accessories" products={accessories} />
+      
 
       {/* Footer Banner */}
       <Banner

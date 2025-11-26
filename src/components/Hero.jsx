@@ -1,10 +1,13 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Hero() {
     const [activeTab, setActiveTab] = useState('inventory');
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [searchTerm, setSearchTerm] = useState('');
+    const router = useRouter();
 
     const slides = [
         {
@@ -55,6 +58,14 @@ export default function Hero() {
         return index;
     };
 
+    const goToInventory = (query) => {
+        const trimmed = query.trim();
+        const url = trimmed
+            ? `/inventory?query=${encodeURIComponent(trimmed)}`
+            : '/inventory';
+        router.push(url);
+    };
+
     return (
         <section className="relative bg-white pb-12 overflow-hidden">
             {/* Tabs Section */}
@@ -90,21 +101,40 @@ export default function Hero() {
 
             {/* Search Bar Section */}
             <div className="container mx-auto px-4 -mt-0 relative z-20">
-                <div className="bg-white rounded-full shadow-2xl max-w-4xl mx-auto flex items-center p-2 border border-gray-100 mt-8 mb-12">
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        goToInventory(searchTerm);
+                    }}
+                    className="bg-white rounded-full shadow-2xl max-w-4xl mx-auto flex items-center p-2 border border-gray-100 mt-8 mb-12"
+                >
                     <div className="pl-6 pr-4 border-r border-gray-200">
                         <span className="text-xs font-bold text-gray-800 block uppercase tracking-wide">Inventory</span>
                     </div>
                     <input
                         type="text"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setSearchTerm(value);
+                            // Navigate as soon as user starts typing;
+                            // after navigation, further typing happens on the inventory page.
+                            if (value.length === 1) {
+                                goToInventory(value);
+                            }
+                        }}
                         placeholder="Type any keywords"
                         className="flex-grow px-4 py-2 text-gray-700 focus:outline-none"
                     />
-                    <button className="bg-orange-400 text-white p-3 rounded-full hover:bg-orange-500 transition shadow-md">
+                    <button
+                        type="submit"
+                        className="bg-orange-400 text-white p-3 rounded-full hover:bg-orange-500 transition shadow-md"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </button>
-                </div>
+                </form>
             </div>
 
             {/* 3-Image Carousel */}

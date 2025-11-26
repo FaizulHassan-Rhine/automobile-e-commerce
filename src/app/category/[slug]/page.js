@@ -1,60 +1,60 @@
-'use client';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import CategoryCard from '@/components/CategoryCard';
+import ListingProductCard from "@/components/ListingProductCard";
+import { allProducts } from "@/data/products";
 
-export default function CategoryDetailsPage() {
-    const params = useParams();
-    const slug = params.slug; // e.g., 'brakes'
+const CATEGORY_CONFIG = {
+  "engine-oil": {
+    title: "Engine Oil",
+  },
+  "auto-detailing-and-care": {
+    title: "Auto detailing and care",
+  },
+  filters: {
+    title: "Filters",
+  },
+  brakes: {
+    title: "Brakes",
+  },
+  damping: {
+    title: "Damping",
+  },
+};
 
-    // Format slug for display (e.g., "brakes" -> "Brakes")
-    const categoryName = slug ? slug.charAt(0).toUpperCase() + slug.slice(1) : '';
+export default async function CategoryPage({ params }) {
+  const { slug } = await params;
 
-    // Dummy data for subcategories based on the screenshot
-    // In a real app, this would be fetched based on the slug
-    const subcategories = [
-        { id: 1, title: 'Brake pads', types: '328 Items', image: 'https://images.unsplash.com/photo-1600661653561-629509216228?q=80&w=400&auto=format&fit=crop' },
-        { id: 2, title: 'Master cylinder', types: '45 Items', image: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=400&auto=format&fit=crop' }, // Placeholder
-        { id: 3, title: 'Brake pipes', types: '1 Items', image: 'https://images.unsplash.com/photo-1530906358829-e84b2769270f?q=80&w=400&auto=format&fit=crop' }, // Placeholder
-        { id: 4, title: 'Caliper repair kit', types: '3 Items', image: 'https://images.unsplash.com/photo-1578844251758-2f71da645217?q=80&w=400&auto=format&fit=crop' }, // Placeholder
-    ];
+  const safeSlug = typeof slug === "string" ? slug : "";
+  const safeTitle =
+    safeSlug.length > 0 ? safeSlug.replace(/-/g, " ") : "Category";
 
-    return (
-        <main className="bg-white min-h-screen pb-20">
-            {/* Breadcrumb Section */}
-            <div className="container mx-auto px-4 py-8">
-                <div className="relative h-12 w-full md:w-1/2 max-w-2xl">
-                    {/* Slanted Orange Background */}
-                    <div
-                        className="absolute inset-0 bg-peru-500 bg-[#D9822B] z-0"
-                        style={{ clipPath: 'polygon(0 0, 95% 0, 100% 100%, 0% 100%)' }}
-                    ></div>
+  const config = CATEGORY_CONFIG[safeSlug] || { title: safeTitle };
 
-                    {/* Breadcrumb Text */}
-                    <div className="relative z-10 h-full flex items-center px-6 text-white text-sm font-medium">
-                        <Link href="/" className="hover:underline">Home</Link>
-                        <span className="mx-2">/</span>
-                        <Link href="/category" className="hover:underline">Category</Link>
-                        <span className="mx-2">/</span>
-                        <span className="font-bold">{categoryName}</span>
-                    </div>
-                </div>
-            </div>
+  const products =
+    safeSlug.length > 0
+      ? allProducts.filter((p) => p.category === safeSlug)
+      : [];
 
-            {/* Subcategories Grid */}
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                    {subcategories.map((sub) => (
-                        <CategoryCard
-                            key={sub.id}
-                            title={sub.title}
-                            types={sub.types}
-                            image={sub.image}
-                            href={`/category/${slug}/${sub.title.toLowerCase().replace(/\s+/g, '-')}`}
-                        />
-                    ))}
-                </div>
-            </div>
-        </main>
-    );
+  return (
+    <main className="bg-white min-h-screen pb-16">
+      <div className="container mx-auto px-4 pt-10">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+            {config.title}
+          </h1>
+          <p className="text-sm text-gray-500 mt-2">
+            {products.length > 0
+              ? `${products.length} products found`
+              : "No products available in this category yet."}
+          </p>
+        </div>
+
+        {products.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ListingProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
+  );
 }

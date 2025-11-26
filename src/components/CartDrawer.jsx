@@ -60,9 +60,18 @@ export default function CartDrawer() {
                                 key={item.id}
                                 className="flex items-center space-x-4 border-b pb-4 last:border-b-0"
                             >
-                                <div className="relative w-20 h-20 bg-gray-50 rounded flex-shrink-0 flex items-center justify-center">
-                                    {/* Placeholder if no image */}
-                                    <span className="text-2xl">🛢️</span>
+                                <div className="relative w-20 h-20 bg-gray-50 rounded flex-shrink-0 flex items-center justify-center overflow-hidden">
+                                    {item.image ? (
+                                        <Image
+                                            src={item.image}
+                                            alt={item.name}
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    ) : (
+                                        // Fallback icon if no image is available
+                                        <span className="text-2xl">🛢️</span>
+                                    )}
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="font-medium text-gray-800 line-clamp-2">
